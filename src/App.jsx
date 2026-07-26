@@ -1,33 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { Routes, Route, useLocation } from 'react-router'
+import { HomePage } from './pages/HomePage.jsx'
+import { About } from './pages/About.jsx'
+import { Events } from './pages/Events.jsx'
+import { Sports } from './pages/Sports.jsx'
+import { Projects } from './pages/Projects.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation()
+  const [isPageLoading, setIsPageLoading] = useState(false)
+
+  useEffect(() => {
+    setIsPageLoading(true)
+
+    const timer = window.setTimeout(() => {
+      setIsPageLoading(false)
+    }, 220)
+
+    return () => window.clearTimeout(timer)
+  }, [location.pathname])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={`page-loader ${isPageLoading ? 'page-loader-active' : ''}`} />
+      <div key={location.pathname} className="page-transition">
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<About />} />
+          <Route path="events" element={<Events />} />
+          <Route path="sports" element={<Sports />} />
+          <Route path="projects" element={<Projects />} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
