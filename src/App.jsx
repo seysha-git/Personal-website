@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router'
 import { HomePage } from './pages/HomePage.jsx'
-import { About } from './pages/About.jsx'
 import { Events } from './pages/Events.jsx'
 import { Sports } from './pages/Sports.jsx'
 import { Projects } from './pages/Projects.jsx'
@@ -26,7 +25,6 @@ function App() {
       <div key={location.pathname} className="page-transition">
         <Routes>
           <Route index element={<HomePage />} />
-          <Route path="about" element={<About />} />
           <Route path="events" element={<Events />} />
           <Route path="sports" element={<Sports />} />
           <Route path="projects" element={<Projects />} />
